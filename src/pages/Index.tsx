@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import WebcamCapture from "@/components/WebcamCapture";
 import AvatarViewer from "@/components/AvatarViewer";
 import StepIndicator from "@/components/StepIndicator";
 import ProcessingOverlay from "@/components/ProcessingOverlay";
-import { generateAvatar, checkSDAvailability } from "@/lib/imageGeneration";
-import { Cpu, AlertTriangle } from "lucide-react";
+import { generateAvatar } from "@/lib/imageGeneration";
+import { Cpu } from "lucide-react";
 
 type AppStep = "camera" | "capture" | "processing" | "complete";
 
@@ -13,13 +13,7 @@ const Index = () => {
   const [step, setStep] = useState<AppStep>("camera");
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
-  const [isSDAvailable, setIsSDAvailable] = useState<boolean | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
-
-  useEffect(() => {
-    // Check SD availability on mount
-    checkSDAvailability().then(setIsSDAvailable);
-  }, []);
 
   const handleCapture = async (imageData: string) => {
     setCapturedImage(imageData);
@@ -33,9 +27,8 @@ const Index = () => {
       toast.success("Your Digital Self is ready!");
     } catch (error) {
       console.error("Generation failed:", error);
-      toast.error(
-        "Failed to generate avatar. Make sure AUTOMATIC1111 is running locally with --api --cors-allow-origins flags."
-      );
+      const errorMessage = error instanceof Error ? error.message : "Failed to generate avatar";
+      toast.error(errorMessage);
       setStep("camera");
     } finally {
       setIsProcessing(false);
@@ -75,25 +68,6 @@ const Index = () => {
           </p>
         </header>
 
-        {/* SD Status Warning */}
-        {isSDAvailable === false && (
-          <div className="mb-6 p-4 glass-panel border-destructive/50 animate-fade-in">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
-              <div>
-                <h4 className="text-sm font-semibold text-destructive mb-1">
-                  Stable Diffusion Not Detected
-                </h4>
-                <p className="text-sm text-muted-foreground">
-                  Start AUTOMATIC1111 WebUI with: 
-                  <code className="ml-2 px-2 py-0.5 bg-muted rounded text-xs font-mono">
-                    --api --cors-allow-origins=*
-                  </code>
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
 
         {/* Step Indicator */}
         <div className="mb-8">
@@ -125,7 +99,7 @@ const Index = () => {
         {/* Footer */}
         <footer className="mt-12 text-center text-sm text-muted-foreground">
           <p>
-            Powered by Stable Diffusion • Runs 100% locally
+            Powered by Lovable AI • Cloud-based generation
           </p>
         </footer>
       </div>
