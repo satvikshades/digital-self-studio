@@ -5,16 +5,16 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-const AVATAR_PROMPT = `Transform this photo into a hyper-realistic digital human avatar for the metaverse.
-Create a photorealistic 3D render that looks like the actual person but enhanced:
-- Preserve exact facial features, bone structure, and likeness from the original photo
-- Realistic skin texture with visible pores, subtle imperfections, and natural skin details
-- Professional studio lighting with soft shadows
-- Sharp, high-definition quality like a professional portrait
-- Natural eye reflections and realistic hair texture
-- Clean, polished look suitable for virtual worlds and digital platforms
-- Slight digital enhancement while maintaining complete realism
-The result should look like a high-quality digital twin - recognizable as the same person, photorealistic, not cartoonish or animated.`;
+const AVATAR_PROMPT = `Transform this photo into a cute, friendly cartoon avatar in Bitmoji/Snapchat avatar style.
+Make it look like a charming illustrated character with:
+- Soft, smooth skin with a warm, friendly appearance
+- Big expressive eyes with a cute, approachable look
+- Simplified but recognizable facial features from the original photo
+- Clean vector-art style illustration
+- Bright, cheerful colors
+- Rounded, friendly shapes
+- Professional cartoon illustration quality
+Keep the person's likeness clearly recognizable but stylized as a cute cartoon avatar. Make it look like a premium Bitmoji-style personal avatar.`;
 
 serve(async (req) => {
   // Handle CORS preflight requests
