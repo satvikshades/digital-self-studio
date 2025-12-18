@@ -5,15 +5,16 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-const AVATAR_PROMPT = `Transform this photo into a futuristic 3D avatar in sci-fi cyberpunk style. 
-Make it look like a high-quality digital human with:
-- Smooth stylized skin with subtle metallic highlights
-- Pixar-quality cinematic lighting with neon cyan and magenta accents
-- High fidelity facial structure preserved from the original
-- Metaverse avatar aesthetic
-- Professional studio lighting
-- Sleek futuristic styling
-Keep the person recognizable but stylized. Make it look like a premium digital avatar for a sci-fi game or metaverse.`;
+const AVATAR_PROMPT = `Transform this photo into a cute, friendly cartoon avatar in Bitmoji/Snapchat avatar style.
+Make it look like a charming illustrated character with:
+- Soft, smooth skin with a warm, friendly appearance
+- Big expressive eyes with a cute, approachable look
+- Simplified but recognizable facial features from the original photo
+- Clean vector-art style illustration
+- Bright, cheerful colors
+- Rounded, friendly shapes
+- Professional cartoon illustration quality
+Keep the person's likeness clearly recognizable but stylized as a cute cartoon avatar. Make it look like a premium Bitmoji-style personal avatar.`;
 
 serve(async (req) => {
   // Handle CORS preflight requests

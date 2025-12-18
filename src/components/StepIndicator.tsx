@@ -31,23 +31,23 @@ const StepIndicator = ({ currentStep }: StepIndicatorProps) => {
             <div className="flex flex-col items-center">
               <div
                 className={cn(
-                  "w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-500",
-                  isActive && "bg-primary text-primary-foreground neon-glow",
-                  isCompleted && "bg-primary/30 text-primary",
+                  "w-10 h-10 md:w-11 md:h-11 rounded-full flex items-center justify-center transition-all duration-300",
+                  isActive && "bg-primary text-primary-foreground shadow-lg shadow-primary/30",
+                  isCompleted && "bg-primary/20 text-primary",
                   isPending && "bg-muted text-muted-foreground"
                 )}
               >
                 <Icon
                   className={cn(
-                    "w-5 h-5 md:w-6 md:h-6",
+                    "w-5 h-5",
                     isActive && step.id === "processing" && "animate-spin"
                   )}
                 />
               </div>
               <span
                 className={cn(
-                  "text-xs md:text-sm mt-2 font-medium transition-colors",
-                  isActive && "text-primary neon-text",
+                  "text-xs mt-2 font-medium transition-colors",
+                  isActive && "text-primary",
                   isCompleted && "text-primary/70",
                   isPending && "text-muted-foreground"
                 )}
@@ -60,9 +60,9 @@ const StepIndicator = ({ currentStep }: StepIndicatorProps) => {
             {index < steps.length - 1 && (
               <div
                 className={cn(
-                  "w-8 md:w-16 h-[2px] mx-2 transition-all duration-500",
+                  "w-8 md:w-14 h-[2px] mx-2 rounded-full transition-all duration-300",
                   index < currentIndex
-                    ? "bg-gradient-to-r from-primary to-primary"
+                    ? "bg-primary"
                     : index === currentIndex
                     ? "bg-gradient-to-r from-primary to-muted"
                     : "bg-muted"
