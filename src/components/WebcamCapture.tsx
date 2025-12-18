@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
-import { Camera, RotateCcw, Zap } from "lucide-react";
+import { Camera, RotateCcw } from "lucide-react";
 
 interface WebcamCaptureProps {
   onCapture: (imageData: string) => void;
@@ -113,18 +113,18 @@ const WebcamCapture = ({ onCapture, isProcessing }: WebcamCaptureProps) => {
 
   if (hasPermission === false) {
     return (
-      <div className="glass-panel p-8 text-center animate-fade-in">
-        <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-destructive/20 flex items-center justify-center">
-          <Camera className="w-10 h-10 text-destructive" />
+      <div className="clean-card p-8 text-center animate-fade-in">
+        <div className="w-16 h-16 mx-auto mb-5 rounded-full bg-destructive/10 flex items-center justify-center">
+          <Camera className="w-8 h-8 text-destructive" />
         </div>
-        <h3 className="text-xl font-orbitron text-foreground mb-2">
+        <h3 className="text-lg font-semibold text-foreground mb-2">
           Camera Access Required
         </h3>
-        <p className="text-muted-foreground mb-6">
-          Please enable camera permissions to create your Digital Self
+        <p className="text-muted-foreground text-sm mb-5">
+          Please enable camera permissions to create your avatar
         </p>
-        <Button variant="cyber" onClick={startCamera}>
-          <Camera className="mr-2" />
+        <Button onClick={startCamera} className="btn-clean">
+          <Camera className="mr-2 w-4 h-4" />
           Enable Camera
         </Button>
       </div>
@@ -133,14 +133,14 @@ const WebcamCapture = ({ onCapture, isProcessing }: WebcamCaptureProps) => {
 
   if (hasPermission === null) {
     return (
-      <div className="glass-panel p-8 text-center animate-fade-in">
-        <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-primary/20 flex items-center justify-center animate-pulse-glow">
-          <Camera className="w-10 h-10 text-primary" />
+      <div className="clean-card p-8 text-center animate-fade-in">
+        <div className="w-16 h-16 mx-auto mb-5 rounded-full bg-primary/10 flex items-center justify-center animate-pulse-soft">
+          <Camera className="w-8 h-8 text-primary" />
         </div>
-        <h3 className="text-xl font-orbitron text-foreground mb-2">
+        <h3 className="text-lg font-semibold text-foreground mb-2">
           Initializing Camera
         </h3>
-        <p className="text-muted-foreground">
+        <p className="text-muted-foreground text-sm">
           Requesting camera access...
         </p>
       </div>
@@ -148,40 +148,23 @@ const WebcamCapture = ({ onCapture, isProcessing }: WebcamCaptureProps) => {
   }
 
   return (
-    <div className="relative animate-fade-in">
+    <div className="animate-fade-in">
       {/* Video Container */}
-      <div className="relative glass-panel overflow-hidden">
-        {/* Scan line effect */}
-        <div className="absolute inset-0 pointer-events-none scan-line z-10" />
-        
-        {/* Corner decorations */}
-        <div className="absolute top-0 left-0 w-16 h-16 border-l-2 border-t-2 border-primary z-20" />
-        <div className="absolute top-0 right-0 w-16 h-16 border-r-2 border-t-2 border-primary z-20" />
-        <div className="absolute bottom-0 left-0 w-16 h-16 border-l-2 border-b-2 border-primary z-20" />
-        <div className="absolute bottom-0 right-0 w-16 h-16 border-r-2 border-b-2 border-primary z-20" />
-
+      <div className="relative clean-card overflow-hidden">
         {/* Face alignment guide */}
         <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
           <div className="relative">
             {/* Oval guide */}
             <div 
-              className="w-48 h-64 md:w-56 md:h-72 rounded-[50%] border-2 border-dashed border-primary/60"
-              style={{
-                boxShadow: "0 0 30px hsl(var(--neon-cyan) / 0.3), inset 0 0 30px hsl(var(--neon-cyan) / 0.1)"
-              }}
+              className="w-44 h-56 md:w-52 md:h-68 rounded-[50%] border-2 border-dashed border-primary/40"
             />
-            {/* Center crosshair */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-              <div className="w-4 h-[1px] bg-primary/60" />
-              <div className="w-[1px] h-4 bg-primary/60 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-            </div>
           </div>
         </div>
 
         {/* Alignment text */}
-        <div className="absolute top-4 left-0 right-0 text-center z-20">
-          <span className="bg-background/80 backdrop-blur-sm px-4 py-2 rounded-full text-sm text-primary font-medium">
-            Align your face within the guide
+        <div className="absolute top-3 left-0 right-0 text-center z-20">
+          <span className="bg-card/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs text-muted-foreground font-medium">
+            Center your face
           </span>
         </div>
 
@@ -193,12 +176,12 @@ const WebcamCapture = ({ onCapture, isProcessing }: WebcamCaptureProps) => {
           muted
           className={`w-full aspect-square object-cover ${
             facingMode === "user" ? "scale-x-[-1]" : ""
-          } ${isCapturing ? "animate-glitch" : ""}`}
+          } ${isCapturing ? "opacity-80" : ""}`}
         />
 
         {/* Capture flash effect */}
         {isCapturing && (
-          <div className="absolute inset-0 bg-primary/30 animate-pulse z-30" />
+          <div className="absolute inset-0 bg-white/50 z-30" />
         )}
 
         {/* Hidden canvas for capture */}
@@ -212,31 +195,31 @@ const WebcamCapture = ({ onCapture, isProcessing }: WebcamCaptureProps) => {
           size="icon"
           onClick={flipCamera}
           disabled={isProcessing}
-          className="w-12 h-12 rounded-full"
+          className="w-11 h-11 rounded-full btn-clean"
         >
-          <RotateCcw className="w-5 h-5" />
+          <RotateCcw className="w-4 h-4" />
         </Button>
 
         <Button
-          variant="capture"
           onClick={capturePhoto}
           disabled={isProcessing || isCapturing}
-          className="relative"
+          size="lg"
+          className="px-8 rounded-full btn-clean shadow-lg shadow-primary/25"
         >
           {isProcessing ? (
             <>
-              <div className="w-6 h-6 border-2 border-background border-t-transparent rounded-full animate-spin" />
-              <span className="ml-2">Processing...</span>
+              <div className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin mr-2" />
+              Processing...
             </>
           ) : (
             <>
-              <Zap className="w-6 h-6" />
-              <span>Capture</span>
+              <Camera className="w-5 h-5 mr-2" />
+              Capture
             </>
           )}
         </Button>
 
-        <div className="w-12 h-12" /> {/* Spacer for symmetry */}
+        <div className="w-11 h-11" /> {/* Spacer for symmetry */}
       </div>
     </div>
   );
