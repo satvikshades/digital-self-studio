@@ -1,0 +1,75 @@
+import { Camera, Scan, Loader2, Sparkles } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+type Step = "camera" | "capture" | "processing" | "complete";
+
+interface StepIndicatorProps {
+  currentStep: Step;
+}
+
+const steps: { id: Step; label: string; icon: React.ElementType }[] = [
+  { id: "camera", label: "Camera", icon: Camera },
+  { id: "capture", label: "Capture", icon: Scan },
+  { id: "processing", label: "Processing", icon: Loader2 },
+  { id: "complete", label: "Complete", icon: Sparkles },
+];
+
+export default function StepIndicator({ currentStep }: StepIndicatorProps) {
+  const currentIndex = steps.findIndex((s) => s.id === currentStep);
+
+  return (
+    <div className="flex items-center justify-center gap-2 md:gap-4">
+      {steps.map((step, index) => {
+        const Icon = step.icon;
+        const isActive = index === currentIndex;
+        const isCompleted = index < currentIndex;
+        const isPending = index > currentIndex;
+
+        return (
+          <div key={step.id} className="flex items-center">
+            <div className="flex flex-col items-center">
+              <div
+                className={cn(
+                  "w-10 h-10 md:w-11 md:h-11 rounded-full flex items-center justify-center transition-all duration-300",
+                  isActive && "bg-primary text-primary-foreground shadow-lg shadow-primary/30",
+                  isCompleted && "bg-primary/20 text-primary",
+                  isPending && "bg-muted text-muted-foreground"
+                )}
+              >
+                <Icon
+                  className={cn(
+                    "w-5 h-5",
+                    isActive && step.id === "processing" && "animate-spin"
+                  )}
+                />
+              </div>
+              <span
+                className={cn(
+                  "text-xs mt-2 font-medium transition-colors",
+                  isActive && "text-primary",
+                  isCompleted && "text-primary/70",
+                  isPending && "text-muted-foreground"
+                )}
+              >
+                {step.label}
+              </span>
+            </div>
+
+            {index < steps.length - 1 && (
+              <div
+                className={cn(
+                  "w-8 md:w-14 h-[2px] mx-2 rounded-full transition-all duration-300",
+                  index < currentIndex
+                    ? "bg-primary"
+                    : index === currentIndex
+                    ? "bg-gradient-to-r from-primary to-muted"
+                    : "bg-muted"
+                )}
+              />
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
