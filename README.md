@@ -1,73 +1,103 @@
-# Welcome to your Lovable project
+# Avatar Creator
 
-## Project info
+A React + Vite frontend with a Node.js Express backend for generating cartoon avatars using Google Gemini AI.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Project Structure
 
-## How can I edit this code?
+```
+├── server/              # Express backend
+│   ├── server.js        # Main server file
+│   ├── package.json     # Backend dependencies
+│   └── .env.example     # Environment template
+├── src/                 # React frontend
+└── ...
+```
 
-There are several ways of editing your application.
+## Prerequisites
 
-**Use Lovable**
+- Node.js 18+ 
+- Google Gemini API key ([Get one here](https://aistudio.google.com/app/apikey))
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## Setup
 
-Changes made via Lovable will be committed automatically to this repo.
+### 1. Backend Setup
 
-**Use your preferred IDE**
+```bash
+cd server
+npm install
+cp .env.example .env
+```
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+Edit `server/.env` and add your Gemini API key:
+```
+GEMINI_API_KEY=your_actual_api_key_here
+```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### 2. Frontend Setup
 
-Follow these steps:
+```bash
+npm install
+```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## Running Locally
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### Start the Backend (Terminal 1)
 
-# Step 3: Install the necessary dependencies.
-npm i
+```bash
+cd server
+npm start
+```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+The server will run at `http://localhost:5000`
+
+### Start the Frontend (Terminal 2)
+
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The frontend will run at `http://localhost:5173` (or similar)
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## API Endpoints
 
-**Use GitHub Codespaces**
+### POST /generate-avatar
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Generates a cartoon avatar from a photo.
 
-## What technologies are used for this project?
+**Request:**
+```json
+{
+  "image": "data:image/jpeg;base64,..."
+}
+```
 
-This project is built with:
+**Response:**
+```json
+{
+  "image": "data:image/png;base64,...",
+  "message": "Your digital avatar is ready!"
+}
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### GET /health
 
-## How can I deploy this project?
+Health check endpoint.
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+## How It Works
 
-## Can I connect a custom domain to my Lovable project?
+1. User takes a photo with their webcam
+2. Frontend sends the base64 image to the local Express backend
+3. Backend calls Google Gemini API to generate a cartoon avatar
+4. Generated avatar is returned and displayed
 
-Yes, you can!
+## Technologies
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+- **Frontend**: Vite, React, TypeScript, Tailwind CSS, shadcn-ui
+- **Backend**: Node.js, Express
+- **AI**: Google Gemini API
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## Troubleshooting
+
+- **CORS errors**: Make sure the backend is running on port 5000
+- **API key errors**: Verify your Gemini API key is correctly set in `server/.env`
+- **Rate limits**: Wait a moment and try again if you hit Gemini's rate limits
